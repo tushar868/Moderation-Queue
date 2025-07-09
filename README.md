@@ -59,30 +59,6 @@ http://localhost:3000    # create-react-app default
 
 ---
 
-## 🧪 Run tests (if included)
-
-```bash
-npm test
-```
-
-(Currently no tests included. If you integrate Jest or React Testing Library, use this command.)
-
----
-
-## 🌍 Environment Variables
-
-This project does **not require any environment variables by default**.
-
-If you add API integrations, create a `.env` file in your root directory with entries like:
-
-```bash
-VITE_API_URL=https://api.example.com
-```
-
-_(Use `REACT_APP_` prefix if using create-react-app instead of Vite.)_
-
----
-
 ## 🚀 Tech Stack
 
 - ⚛️ **React** for building UI  
