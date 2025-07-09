@@ -32,7 +32,7 @@ Easily review, filter, and moderate posts with a beautiful UI, batch actions, an
 ## 🔧 Installation
 
 ```bash
-git clone https://github.com/tushar868/moderation-queue.git
+git clone https://github.com/tushar868/Moderation-Queue.git
 cd moderation-queue
 
 npm install
@@ -94,4 +94,4 @@ _(Use `REACT_APP_` prefix if using create-react-app instead of Vite.)_
 
 ## 📝 License
 
-MIT © [Your Name](https://github.com/yourusername)
+MIT © [Tushar](https://github.com/tushar868)
