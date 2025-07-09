@@ -10,9 +10,11 @@ A modern moderation dashboard built with **React**, **Tailwind CSS**, **Redux To
 Easily review, filter, and moderate posts with a beautiful UI, batch actions, and keyboard shortcuts.
 
 ---
+
 ## 🚀 Live Demo
 
 👉 [View it on Netlify](https://moderation-queuee.netlify.app/)
+
 ---
 
 ## ✨ Features
