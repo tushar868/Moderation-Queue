@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAll, clearSelected, batchApprove, setFilters } from '../features/posts/postsSlice'
+import { selectAll, clearSelected, batchApprove, setStatusFilter, setFilters } from '../features/posts/postsSlice'
 import { useState, useEffect } from 'react'
 import Flatpickr from "react-flatpickr"
-import "flatpickr/dist/themes/material_blue.css" 
+import "flatpickr/dist/themes/material_blue.css"
 
 export default function BatchToolbar({ setConfirm }) {
-  const selectedCount = useSelector(state => state.posts.selected.length)
   const dispatch = useDispatch()
+  const selectedCount = useSelector(state => state.posts.selected.length)
+  const { statusFilter, posts } = useSelector(state => state.posts)
 
   const [selectedReason, setSelectedReason] = useState("")
   const [fromDate, setFromDate] = useState("")
   const [toDate, setToDate] = useState("")
 
-  // auto filter reason
   useEffect(() => {
     dispatch(setFilters({
       reason: selectedReason,
@@ -29,49 +29,19 @@ export default function BatchToolbar({ setConfirm }) {
     }))
   }
 
+  // counts
+  const pendingCount = posts.filter(p => p.status === 'pending').length
+  const approvedCount = posts.filter(p => p.status === 'approved').length
+  const rejectedCount = posts.filter(p => p.status === 'rejected').length
+
   return (
     <>
-    
+      {/* TABS */}
       
-      <div className="flex flex-wrap gap-4 items-center mb-6">
-        <button
-          className="px-4 py-1.5 border border-white rounded-full hover:bg-gray-100 hover:text-black transition text-white"
-          onClick={() => dispatch(selectAll())}
-        >
-          Select All
-        </button>
-        <button
-          className="px-4 py-1.5 border border-white rounded-full hover:bg-gray-100 hover:text-black transition text-white"
-          onClick={() => dispatch(clearSelected())}
-        >
-          Clear
-        </button>
 
-        <div className="ml-auto text-sm text-white">
-          Selected: <span className="font-semibold">{selectedCount}</span>
-        </div>
-
-        <button
-          className="px-5 py-2 bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 
-          text-white rounded-full shadow-md transition transform hover:scale-105 active:scale-95 disabled:opacity-50"
-          onClick={() => dispatch(batchApprove())}
-          disabled={selectedCount === 0}
-        >
-          Batch Approve
-        </button>
-        <button
-          className="px-5 py-2 bg-gradient-to-r from-red-400 to-red-500 hover:from-red-500 hover:to-red-600 
-          text-white rounded-full shadow-md transition transform hover:scale-105 active:scale-95 disabled:opacity-50"
-          onClick={() => setConfirm({ type: 'batchReject' })}
-          disabled={selectedCount === 0}
-        >
-          Batch Reject
-        </button>
-      </div>
-
-      
+      {/* FILTERS */}
       <div className="flex flex-wrap justify-center items-center gap-4 
-        bg-white/10 backdrop-blur-lg px-6 py-4 rounded-xl shadow">
+        bg-white/10 backdrop-blur-lg px-6 py-4 rounded-xl shadow mb-6">
 
         <select
           value={selectedReason}
@@ -129,10 +99,11 @@ export default function BatchToolbar({ setConfirm }) {
 
         <button
           onClick={() => {
-            setFromDate("")
-            setToDate("")
+            setSelectedReason("")   
+            setFromDate("")       
+            setToDate("")           
             dispatch(setFilters({
-              reason: selectedReason,
+              reason: "",
               from: "",
               to: ""
             }))
@@ -144,6 +115,50 @@ export default function BatchToolbar({ setConfirm }) {
         </button>
       </div>
 
+      {/* SELECT ALL for Pending */}
+      {statusFilter === 'pending' && (
+        <>
+          <div className="flex items-center gap-4 mb-6">
+            <button
+              onClick={() => dispatch(selectAll())}
+              className="px-6 py-2 border border-white rounded-full text-white 
+              hover:bg-gray-100 hover:text-black transition shadow"
+            >
+               Select All
+            </button>
+          </div>
+
+          {selectedCount > 0 && (
+            <div className="flex flex-wrap justify-between items-center bg-blue-100 text-blue-800 px-6 py-3 rounded-xl shadow mb-6">
+              <div className="font-semibold text-lg flex items-center gap-2">
+                🔵 {selectedCount} posts selected
+                <button
+                  onClick={() => dispatch(clearSelected())}
+                  className="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-blue-200 rounded-full transition"
+                >
+                  ❌ Clear selection
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-4 mt-2 sm:mt-0">
+                <button
+                  onClick={() => dispatch(batchApprove())}
+                  className="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full 
+                  shadow-md transition transform hover:scale-105 active:scale-95"
+                >
+                  ✅ Approve All ({selectedCount})
+                </button>
+                <button
+                  onClick={() => setConfirm({ type: 'batchReject' })}
+                  className="px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-full 
+                  shadow-md transition transform hover:scale-105 active:scale-95"
+                >
+                  ❌ Reject All ({selectedCount})
+                </button>
+              </div>
+            </div>
+          )}
+        </>
+      )}
     </>
   )
 }
