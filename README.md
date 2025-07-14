@@ -13,13 +13,31 @@ Easily review, filter, and moderate posts with a beautiful UI, batch actions, an
 
 ## ✨ Features
 
-✅ Filter posts by status: **Pending / Approved / Rejected**  
-✅ Batch select, approve, or reject posts  
-✅ Confirmation modal with **undo support**  
-✅ Filter by reported reason & date range  
-✅ Responsive design, soft gradients, and smooth transitions  
-✅ Calendar date picker with `dd-mm-yyyy` format via Flatpickr
+✅ Filter posts by status:
+- 🟠 Pending
+- ✅ Approved
+- ❌ Rejected
 
+✅ Intuitive batch selection:
+- Approve or reject multiple posts at once
+- Clear selections easily
+
+✅ Full post detail modal:
+- Scrollable with fixed header
+- Shows content, image, report info, and user metadata
+- Inline approve/reject directly from modal
+
+✅ Filters for:
+- Reported reason (Spam, Harassment, Fake News, etc)
+- Date range with Flatpickr in dd-mm-yyyy format
+
+✅ Undo support for single actions
+✅ Keyboard shortcuts:
+- A → approve first post
+- R → reject first post
+- ESC → close modal
+
+✅ Fully responsive design with soft gradients and subtle shadows
 ---
 
 ## 📦 Prerequisites
@@ -89,8 +107,10 @@ _(Use `REACT_APP_` prefix if using create-react-app instead of Vite.)_
 - 🌬️ **Tailwind CSS** for modern styling  
 - 🛠️ **Redux Toolkit** for state management  
 - 📅 **Flatpickr** for elegant date selection
+- 🎨 Heroicons / react-icons	Icons & badges
 
 ---
+
 
 ## 📝 License
 
